@@ -1,0 +1,545 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_above="@+id/navigation"
+        android:background="@color/colorWindowBackground"
+        android:scrollbars="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+        <LinearLayout
+            android:id="@+id/c_e"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+            <RelativeLayout
+                android:background="#1FCA63"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    app:srcCompat="@drawable/ic_ornamen4"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginLeft="30dp"
+                    android:layout_width="150dp"
+                    android:layout_height="200dp"/>
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    app:srcCompat="@drawable/ic_ornamen5"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginTop="-20dp"
+                    android:layout_marginRight="-80dp"
+                    android:layout_width="250dp"
+                    android:layout_height="250dp"/>
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <RelativeLayout
+                        android:padding="@dimen/list_vertical_margin"
+                        android:layout_marginBottom="50dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <LinearLayout
+                            android:layout_alignParentRight="true"
+                            android:orientation="horizontal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+                            <LinearLayout
+                                android:orientation="vertical"
+                                android:layout_marginRight="@dimen/list_vertical_margin"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content">
+                                <id.kopas.berkarya.said.ibanking.fun.TextViewCustom
+                                    android:id="@+id/tvKataSambutan"
+                                    app:textViewFont="overpass_thin.ttf"
+                                    android:textSize="13dp"
+                                    android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                                    android:layout_gravity="right"
+                                    android:textColor="#FFFFFF"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Assallamu’allaikum"/>
+
+                                <id.kopas.berkarya.said.ibanking.fun.TextViewCustom
+                                    android:id="@+id/tvNamaPengguna"
+                                    app:textViewFont="overpass_bold.ttf"
+                                    android:textSize="18dp"
+                                    android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                                    android:layout_gravity="right"
+                                    android:textColor="#FFFFFF"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Tgk Zulkarnaini"/>
+                            </LinearLayout>
+
+                            <de.hdodenhof.circleimageview.CircleImageView
+                                android:id="@+id/imageProfile"
+                                android:layout_width="42dp"
+                                android:layout_height="42dp"
+                                android:src="@drawable/img1"
+                                app:civ_border_width="0dp"
+                                app:civ_border_color="#FF000000"/>
+                        </LinearLayout>
+
+                    </RelativeLayout>
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_gravity="center"
+                        android:layout_marginBottom="30dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <LinearLayout
+                            android:orientation="horizontal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+
+                            <id.kopas.berkarya.said.ibanking.fun.TextViewCustom
+                                android:id="@+id/tvCurency"
+                                app:textViewFont="overpass_bold.ttf"
+                                android:textSize="14dp"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                                android:layout_gravity="center|top"
+                                android:layout_marginTop="5dp"
+                                android:textColor="#FFFFFF"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Rp."/>
+
+                            <id.kopas.berkarya.said.ibanking.fun.TextViewCustom
+                                android:id="@+id/tvSaldoSekarang"
+                                app:textViewFont="overpass_extrabold.ttf"
+                                android:textSize="28dp"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                                android:layout_gravity="center"
+                                android:textColor="#FFFFFF"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="3.454.049,-"/>
+                        </LinearLayout>
+
+                        <id.kopas.berkarya.said.ibanking.fun.TextViewCustom
+                            app:textViewFont="overpass_bold.ttf"
+                            android:textSize="12dp"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                            android:layout_gravity="right"
+                            android:textColor="#FFFFFF"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Saldo saat ini"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:background="@drawable/card_view_border"
+                        android:layout_marginTop="@dimen/list_vertical_margin"
+                        android:layout_marginLeft="@dimen/list_vertical_margin"
+                        android:layout_marginRight="@dimen/list_vertical_margin"
+                        android:layout_marginBottom="-3dp"
+                        android:orientation="horizontal"
+                        android:layout_gravity="center"
+                        android:layout_width="300dp"
+                        android:layout_height="wrap_content">
+
+
+
+                        <LinearLayout
+                            android:id="@+id/pageTransfer"
+                            android:background="?selectableItemBackground"
+                            android:orientation="vertical"
+                            android:layout_width="100dp"
+                            android:paddingTop="@dimen/list_vertical_margin"
+                            android:paddingBottom="@dimen/list_vertical_margin"
+                            android:layout_height="match_parent">
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                app:srcCompat="@drawable/ic_m1"
+                                android:layout_gravity="center"
+                                android:layout_width="32dp"
+                                android:layout_height="32dp"/>
+
+                            <id.kopas.berkarya.said.ibanking.fun.TextViewCustom
+                                app:textViewFont="overpass_regular.ttf"
+                                android:textSize="12dp"
+                                android:layout_marginTop="@dimen/list_vertical_margin"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                                android:layout_gravity="center"
+                                android:gravity="center"
+                                android:textColor="#FFFFFF"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Transfer"/>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/pagePembayaran"
+                            android:background="?selectableItemBackground"
+                            android:orientation="vertical"
+                            android:layout_width="100dp"
+                            android:paddingTop="@dimen/list_vertical_margin"
+                            android:paddingBottom="@dimen/list_vertical_margin"
+                            android:layout_height="match_parent">
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                app:srcCompat="@drawable/ic_m2"
+                                android:layout_gravity="center"
+                                android:layout_width="32dp"
+                                android:layout_height="32dp"/>
+
+                            <id.kopas.berkarya.said.ibanking.fun.TextViewCustom
+                                app:textViewFont="overpass_regular.ttf"
+                                android:textSize="12dp"
+                                android:layout_marginTop="@dimen/list_vertical_margin"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                                android:layout_gravity="center"
+                                android:gravity="center"
+                                android:textColor="#FFFFFF"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Pembayaran"/>
+
+                        </LinearLayout>
+
+
+
+                        <LinearLayout
+                            android:id="@+id/pageTopUp"
+                            android:background="?selectableItemBackground"
+                            android:orientation="vertical"
+                            android:layout_width="100dp"
+                            android:paddingTop="@dimen/list_vertical_margin"
+                            android:paddingBottom="@dimen/list_vertical_margin"
+                            android:layout_height="match_parent">
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                app:srcCompat="@drawable/ic_m3"
+                                android:layout_gravity="center"
+                                android:layout_width="32dp"
+                                android:layout_height="32dp"/>
+
+                            <id.kopas.berkarya.said.ibanking.fun.TextViewCustom
+                                app:textViewFont="overpass_regular.ttf"
+                                android:textSize="12dp"
+                                android:layout_marginTop="@dimen/list_vertical_margin"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                                android:layout_gravity="center"
+                                android:gravity="center"
+                                android:textColor="#FFFFFF"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Top Up"/>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+                </LinearLayout>
+            </RelativeLayout>
+
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <androidx.cardview.widget.CardView
+                    android:layout_margin="@dimen/list_vertical_margin"
+                    android:layout_gravity="center"
+                    android:layout_width="300dp"
+                    android:orientation="vertical"
+                    android:layout_height="wrap_content"
+                    app:cardElevation="3dp"
+                    app:cardCornerRadius="10dp"
+                    android:backgroundTint="#FFFFFF">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:minHeight="80dp"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:orientation="horizontal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent">
+
+                            <LinearLayout
+                                android:id="@+id/pageKirimUang"
+                                android:background="?selectableItemBackground"
+                                android:orientation="vertical"
+                                android:layout_width="100dp"
+                                android:paddingTop="@dimen/list_vertical_margin"
+                                android:paddingBottom="@dimen/list_vertical_margin"
+                                android:layout_height="wrap_content">
+
+                                <androidx.appcompat.widget.AppCompatImageView
+                                    app:srcCompat="@drawable/ic_f1"
+                                    android:layout_gravity="center"
+                                    android:layout_width="32dp"
+                                    android:layout_height="32dp"/>
+
+                                <id.kopas.berkarya.said.ibanking.fun.TextViewCustom
+                                    app:textViewFont="overpass_regular.ttf"
+                                    android:textSize="12dp"
+                                    android:layout_marginTop="@dimen/list_vertical_margin"
+                                    android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                                    android:layout_gravity="center"
+                                    android:gravity="center"
+                                    android:textColor="#606060"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Kirim Uang"/>
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/pagePermintaanUang"
+                                android:background="?selectableItemBackground"
+                                android:orientation="vertical"
+                                android:layout_width="100dp"
+                                android:paddingTop="@dimen/list_vertical_margin"
+                                android:paddingBottom="@dimen/list_vertical_margin"
+                                android:layout_height="wrap_content">
+
+                                <androidx.appcompat.widget.AppCompatImageView
+                                    app:srcCompat="@drawable/ic_f2"
+                                    android:layout_gravity="center"
+                                    android:layout_width="32dp"
+                                    android:layout_height="32dp"/>
+
+                                <id.kopas.berkarya.said.ibanking.fun.TextViewCustom
+                                    app:textViewFont="overpass_regular.ttf"
+                                    android:textSize="12dp"
+                                    android:layout_marginTop="@dimen/list_vertical_margin"
+                                    android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                                    android:layout_gravity="center"
+                                    android:gravity="center"
+                                    android:textColor="#606060"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Permintaan Uang"/>
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/pagePembelian"
+                                android:background="?selectableItemBackground"
+                                android:orientation="vertical"
+                                android:layout_width="100dp"
+                                android:paddingTop="@dimen/list_vertical_margin"
+                                android:paddingBottom="@dimen/list_vertical_margin"
+                                android:layout_height="wrap_content">
+
+                                <androidx.appcompat.widget.AppCompatImageView
+                                    app:srcCompat="@drawable/ic_f3"
+                                    android:layout_gravity="center"
+                                    android:layout_width="32dp"
+                                    android:layout_height="32dp"/>
+
+                                <id.kopas.berkarya.said.ibanking.fun.TextViewCustom
+                                    app:textViewFont="overpass_regular.ttf"
+                                    android:textSize="12dp"
+                                    android:layout_marginTop="@dimen/list_vertical_margin"
+                                    android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                                    android:layout_gravity="center"
+                                    android:gravity="center"
+                                    android:textColor="#606060"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Pembelian"/>
+
+                            </LinearLayout>
+                        </LinearLayout>
+
+
+
+
+
+                        <LinearLayout
+                            android:orientation="horizontal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent">
+
+                            <LinearLayout
+                                android:background="?selectableItemBackground"
+                                android:orientation="vertical"
+                                android:layout_width="100dp"
+                                android:paddingTop="@dimen/list_vertical_margin"
+                                android:paddingBottom="@dimen/list_vertical_margin"
+                                android:layout_height="wrap_content">
+
+                                <androidx.appcompat.widget.AppCompatImageView
+                                    app:srcCompat="@drawable/ic_card2"
+                                    android:layout_gravity="center"
+                                    android:layout_width="32dp"
+                                    android:layout_height="32dp"/>
+
+                                <id.kopas.berkarya.said.ibanking.fun.TextViewCustom
+                                    app:textViewFont="overpass_regular.ttf"
+                                    android:textSize="12dp"
+                                    android:layout_marginTop="@dimen/list_vertical_margin"
+                                    android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                                    android:layout_gravity="center"
+                                    android:gravity="center"
+                                    android:textColor="#606060"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="eMoney"/>
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:background="?selectableItemBackground"
+                                android:orientation="vertical"
+                                android:layout_width="100dp"
+                                android:paddingTop="@dimen/list_vertical_margin"
+                                android:paddingBottom="@dimen/list_vertical_margin"
+                                android:layout_height="wrap_content">
+
+                                <androidx.appcompat.widget.AppCompatImageView
+                                    app:srcCompat="@drawable/ic_pembayaran"
+                                    android:layout_gravity="center"
+                                    android:layout_width="32dp"
+                                    android:layout_height="32dp"/>
+
+                                <id.kopas.berkarya.said.ibanking.fun.TextViewCustom
+                                    app:textViewFont="overpass_regular.ttf"
+                                    android:textSize="12dp"
+                                    android:layout_marginTop="@dimen/list_vertical_margin"
+                                    android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                                    android:layout_gravity="center"
+                                    android:gravity="center"
+                                    android:textColor="#606060"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Pembayaran"/>
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:background="?selectableItemBackground"
+                                android:orientation="vertical"
+                                android:layout_width="100dp"
+                                android:paddingTop="@dimen/list_vertical_margin"
+                                android:paddingBottom="@dimen/list_vertical_margin"
+                                android:layout_height="wrap_content">
+
+                                <androidx.appcompat.widget.AppCompatImageView
+                                    app:srcCompat="@drawable/ic_time_outline"
+                                    android:layout_gravity="center"
+                                    android:layout_width="32dp"
+                                    android:layout_height="32dp"/>
+
+                                <id.kopas.berkarya.said.ibanking.fun.TextViewCustom
+                                    app:textViewFont="overpass_regular.ttf"
+                                    android:textSize="12dp"
+                                    android:layout_marginTop="@dimen/list_vertical_margin"
+                                    android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                                    android:layout_gravity="center"
+                                    android:gravity="center"
+                                    android:textColor="#606060"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Transaksi"/>
+
+                            </LinearLayout>
+                        </LinearLayout>
+
+
+
+
+
+                        <LinearLayout
+                            android:orientation="horizontal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent">
+
+                            <LinearLayout
+                                android:background="?selectableItemBackground"
+                                android:orientation="vertical"
+                                android:layout_width="100dp"
+                                android:paddingTop="@dimen/list_vertical_margin"
+                                android:paddingBottom="@dimen/list_vertical_margin"
+                                android:layout_height="wrap_content">
+
+                                <androidx.appcompat.widget.AppCompatImageView
+                                    app:srcCompat="@drawable/ic_setoran"
+                                    android:layout_gravity="center"
+                                    android:layout_width="32dp"
+                                    android:layout_height="32dp"/>
+
+                                <id.kopas.berkarya.said.ibanking.fun.TextViewCustom
+                                    app:textViewFont="overpass_regular.ttf"
+                                    android:textSize="12dp"
+                                    android:layout_marginTop="@dimen/list_vertical_margin"
+                                    android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                                    android:layout_gravity="center"
+                                    android:gravity="center"
+                                    android:textColor="#606060"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Setoran Online"/>
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:background="?selectableItemBackground"
+                                android:orientation="vertical"
+                                android:layout_width="100dp"
+                                android:paddingTop="@dimen/list_vertical_margin"
+                                android:paddingBottom="@dimen/list_vertical_margin"
+                                android:layout_height="wrap_content">
+
+                                <androidx.appcompat.widget.AppCompatImageView
+                                    app:srcCompat="@drawable/ic_info"
+                                    android:layout_gravity="center"
+                                    android:layout_width="32dp"
+                                    android:layout_height="32dp"/>
+
+                                <id.kopas.berkarya.said.ibanking.fun.TextViewCustom
+                                    app:textViewFont="overpass_regular.ttf"
+                                    android:textSize="12dp"
+                                    android:layout_marginTop="@dimen/list_vertical_margin"
+                                    android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                                    android:layout_gravity="center"
+                                    android:gravity="center"
+                                    android:textColor="#606060"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Info Rekening"/>
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:orientation="vertical"
+                                android:layout_width="100dp"
+                                android:paddingTop="@dimen/list_vertical_margin"
+                                android:paddingBottom="@dimen/list_vertical_margin"
+                                android:layout_height="match_parent">
+
+
+                            </LinearLayout>
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+
+                </androidx.cardview.widget.CardView>
+            </LinearLayout>
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</RelativeLayout>
