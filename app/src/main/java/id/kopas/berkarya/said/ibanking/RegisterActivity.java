@@ -1,18 +1,14 @@
 package id.kopas.berkarya.said.ibanking;
 
-import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -22,8 +18,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -33,23 +30,28 @@ import androidx.appcompat.widget.AppCompatEditText;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.res.ResourcesCompat;
 
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.StringRequest;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.checkbox.MaterialCheckBox;
 import com.google.android.material.textfield.TextInputEditText;
-import com.nabinbhandari.android.permissions.PermissionHandler;
-import com.nabinbhandari.android.permissions.Permissions;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
+import id.kopas.berkarya.said.ibanking.adapters.AdapterBranch;
+import id.kopas.berkarya.said.ibanking.fun.AppController;
 import id.kopas.berkarya.said.ibanking.fun.DataHelper;
-import id.kopas.berkarya.said.ibanking.fun.TextViewCustom;
 import id.kopas.berkarya.said.ibanking.models.Branch;
 
 public class RegisterActivity extends AppCompatActivity {
@@ -57,16 +59,24 @@ public class RegisterActivity extends AppCompatActivity {
 
     String akun, password;
 
-    ProgressDialog progressDialog;
+    static RelativeLayout progressBar;
 
     static SharedPreferences sharedpreferences;
 
-    AppCompatEditText editKeyBranch, editKeyBranchLinkApi;
-    AutoCompleteTextView editBranch;
-    TextInputEditText editNoRekening, editTanggalLahir, editNamaIbuKandung, editNoHandphone;
+    static AppCompatEditText editKeyBranch;
+    static AppCompatEditText editKeyBranchLinkApi;
+    static AutoCompleteTextView editBranch;
+    static TextInputEditText editNoRekening;
+    static TextInputEditText editTanggalLahir;
+    static TextInputEditText editNamaIbuKandung;
+    static TextInputEditText editNoHandphone;
 
+    Calendar myCalendar = Calendar.getInstance();
+    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+    String dateToday, dateTime;
 
     DataHelper dataHelper;
+    static Context context;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,6 +89,8 @@ public class RegisterActivity extends AppCompatActivity {
         toolbar.setNavigationIcon(R.drawable.ic_chevron_down);
 
         sharedpreferences = getSharedPreferences(Splash.MyPREFERENCES, Context.MODE_PRIVATE);
+
+        context = RegisterActivity.this;
 
         dataHelper = new DataHelper(getApplicationContext());
 
@@ -94,6 +106,8 @@ public class RegisterActivity extends AppCompatActivity {
         /**
          * Find Id
          */
+
+        progressBar = (RelativeLayout) findViewById(R.id.progressBar);
 
         editKeyBranch = findViewById(R.id.editKeyBranch);
         editKeyBranchLinkApi = findViewById(R.id.editKeyBranchLinkApi);
@@ -114,6 +128,27 @@ public class RegisterActivity extends AppCompatActivity {
         editAgree.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.overpass_regular));
         actLanjutkan.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.overpass_bold));
 
+        editTanggalLahir.setText(sdf.format(new Date()));
+        editTanggalLahir.setOnClickListener(v->{
+
+            DatePickerDialog.OnDateSetListener date = (view, year, monthOfYear, dayOfMonth) -> {
+                // TODO Auto-generated method stub
+                myCalendar.set(Calendar.YEAR, year);
+                myCalendar.set(Calendar.MONTH, monthOfYear);
+                myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                editTanggalLahir.setText(sdf.format(myCalendar.getTime()));
+            };
+
+            new DatePickerDialog(
+                    RegisterActivity.this,
+                    date,
+                    myCalendar.get(Calendar.YEAR),
+                    myCalendar.get(Calendar.MONTH),
+                    myCalendar.get(Calendar.DAY_OF_MONTH)
+            ).show();
+
+        });
+
 
         actLanjutkan.setEnabled(false);
 
@@ -130,10 +165,23 @@ public class RegisterActivity extends AppCompatActivity {
             String branch = editKeyBranch.getText().toString();
             if(!TextUtils.isEmpty(branch)){
 
-                cekDataBranch();
+                //cekDataBranch();
+
+                cekDataBranchAsyncTask();
 
             }else{
-                Toast.makeText(v.getContext(),"Silahkan pilih Branch",Toast.LENGTH_SHORT).show();
+                new AlertDialog.Builder(v.getContext())
+                        .setTitle("Perhatian")
+                        .setMessage("Silahkan pilih Branch dahulu!")
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                // Continue with delete operation
+                                dialog.dismiss();
+                            }
+                        })
+                        .show();
+
+                //Toast.makeText(v.getContext(),"Silahkan pilih Branch",Toast.LENGTH_SHORT).show();
 
             }
 
@@ -143,8 +191,8 @@ public class RegisterActivity extends AppCompatActivity {
         /**
          * INIT
          */
-
-        initBranch();
+        initBranchAsyncTask();
+        //initBranch();
 
     }
 
@@ -187,98 +235,76 @@ public class RegisterActivity extends AppCompatActivity {
      */
 
     @SuppressLint("NewApi")
-    private void initBranch(){
+    private static void initBranchAsyncTask() {
+        progressBar.setVisibility(View.VISIBLE);
+        RequestQueue requestQueue = AppController.getInstance().getRequestQueue();
 
-        try {
+        StringRequest serverRequest = new StringRequest(Request.Method.GET,DataHelper.getAlamatServer() + "/informasi_bank",
+                response -> {
+                    progressBar.setVisibility(View.GONE);
+                    try {
+                        if (!response.equals("")) {
+                            JSONArray json = new JSONArray(response);
 
-            //ArrayList<String> items = new ArrayList<>();
-            ArrayList<Branch> branchArrayList = new ArrayList<>();
-            String response_body = dataHelper.getServer(dataHelper.getAlamatServer() + "/informasi_bank" );
-            JSONArray response_json = new JSONArray(response_body);
+                            ArrayList<Branch> branchArrayList = new ArrayList<>();
 
-            for (int i = 0; i < response_json.length(); i++) {
-                JSONObject jsonObject = response_json.getJSONObject(i);
+                            for (int i = 0; i < json.length(); i++) {
+                                JSONObject jsonObject = json.getJSONObject(i);
 
-                if(jsonObject.getString("status_view").equalsIgnoreCase("I")){
-                    //items.add( jsonObject.getString("nama") );
-                    branchArrayList.add(new Branch(
-                            jsonObject.getString("branch"),
-                            jsonObject.getString("nama"),
-                            jsonObject.getString("link_logo_bank"),
-                            jsonObject.getString("status_view"),
-                            jsonObject.getString("status_izin"),
-                            jsonObject.getString("link_api")
-                    ));
-                }
-            }
+                                if(jsonObject.getString("status_view").equalsIgnoreCase("I")){
+                                    //items.add( jsonObject.getString("nama") );
+                                    branchArrayList.add(new Branch(
+                                            jsonObject.getString("branch"),
+                                            jsonObject.getString("nama"),
+                                            jsonObject.getString("link_logo_bank"),
+                                            jsonObject.getString("status_view"),
+                                            jsonObject.getString("status_izin"),
+                                            jsonObject.getString("link_api")
+                                    ));
+                                }
+                            }
 
-            //ArrayAdapter<String> itemsAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, items);
-            //editBranch.setAdapter(itemsAdapter);
+                            if(branchArrayList.size() > 0){
 
+                                ArrayAdapter arrayAdapter = new AdapterBranch(context, R.layout.item_branch, branchArrayList);
+                                editBranch.setAdapter(arrayAdapter);
+                                editBranch.setOnItemClickListener((parent, view, position, id) -> {
+                                    String selected = branchArrayList.get(position).nama;
+                                    editBranch.setText(selected,false);
+                                    editKeyBranch.setText(branchArrayList.get(position).branch);
+                                    editKeyBranchLinkApi.setText(branchArrayList.get(position).link_api);
 
+                                });
 
-            ArrayAdapter arrayAdapter = new AdapterBranch(RegisterActivity.this, R.layout.item_branch, branchArrayList);
-            editBranch.setAdapter(arrayAdapter);
-            editBranch.setOnItemClickListener((parent, view, position, id) -> {
-                String selected = branchArrayList.get(position).nama;
-                editBranch.setText(selected,false);
-                editKeyBranch.setText(branchArrayList.get(position).branch);
-                editKeyBranchLinkApi.setText(branchArrayList.get(position).link_api);
-                /**
-                SharedPreferences.Editor editor = sharedpreferences.edit();
-                editor.putString("branch",branchArrayList.get(position).branch);
-                editor.putString("branch_nama",branchArrayList.get(position).nama);
-                editor.putString("branch_link_logo_bank",branchArrayList.get(position).link_logo_bank);
-                editor.putString("branch_status_view",branchArrayList.get(position).status_view);
-                editor.putString("branch_status_izin",branchArrayList.get(position).status_izin);
-                editor.putString("branch_link_api",branchArrayList.get(position).link_api);
-                editor.apply();*/
+                            }
 
+                        }
 
-            });
-
-        } catch (IOException e) {
-            e.printStackTrace();
-
-        } catch (JSONException e) {
-            e.printStackTrace();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }, error -> {
+            progressBar.setVisibility(View.GONE);
+            Log.w(DataHelper.getTAG(), "JSONException @ initBranchAsyncTask()\n" + error.getMessage());
         }
-    }
+        );
 
-    public class AdapterBranch extends ArrayAdapter<Branch> {
-        private final Context context;
-        private final ArrayList<Branch> lists;
 
-        public AdapterBranch(@NonNull Context context, int resource, @NonNull ArrayList<Branch> objects) {
-            super(context, resource, objects);
-            lists = objects;
-            this.context = context;
-        }
+        serverRequest.setRetryPolicy(
+                new DefaultRetryPolicy(0, -1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT)
+        );
 
-        @SuppressLint("ViewHolder")
-        @NonNull
-        @Override
-        public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            View rowView = inflater.inflate(R.layout.item_branch, parent, false);
-
-            Branch item = lists.get(position);
-
-            TextView tv1 = rowView.findViewById(R.id.tv1);
-            tv1.setText(item.nama);
-
-            return rowView;
-        }
+        requestQueue.add(serverRequest);
     }
 
 
     /**
      * CEK DATA BRANCH
      */
-
-
     @SuppressLint("NewApi")
-    private void cekDataBranch(){
+    private void cekDataBranchAsyncTask() {
+        progressBar.setVisibility(View.VISIBLE);
+        RequestQueue requestQueue = AppController.getInstance().getRequestQueue();
 
         String branchLink = editKeyBranchLinkApi.getText().toString();
         String branch = editKeyBranch.getText().toString();
@@ -287,83 +313,118 @@ public class RegisterActivity extends AppCompatActivity {
         String nama_ibu = editNamaIbuKandung.getText().toString();
         String no_hp = editNoHandphone.getText().toString();
 
-        Map<String, String> params = new HashMap<>();
-        params.put("ib","informasi_nasabah");
-        params.put("branch",editKeyBranch.getText().toString());
-        params.put("norek",editNoRekening.getText().toString());
-        params.put("tgl_lahir",editTanggalLahir.getText().toString());
-        params.put("nama_ibu",editNamaIbuKandung.getText().toString());
-        params.put("no_hp",editNoHandphone.getText().toString());
-
-        String response_body = null;
-        try {
-            response_body = dataHelper.getServer(branchLink +"banking.php?"+
-                    "ib=informasi_nasabah"+
-                    "&branch="+branch+
-                    "&norek="+norek+
-                    "&tgl_lahir="+tgl_lahir+
-                    "&nama_ibu="+nama_ibu+
-                    "&no_hp="+no_hp
-            );
-
-            try{
-
-                /**
-                 * CEK DATA BANK
-                 */
-                JSONObject response_json = new JSONObject(response_body);
-                JSONObject jsonObject = response_json.getJSONObject("data");
-
-                if(!jsonObject.getString("norekening").isEmpty()){
-
-                    /**
-                     * CEK DATA IBANK
-                     */
-                    JSONObject response_json2 = null;
+        StringRequest serverRequest = new StringRequest(Request.Method.GET,branchLink +"banking.php?"+
+                "ib=informasi_nasabah"+
+                "&branch="+branch+
+                "&norek="+norek+
+                "&tgl_lahir="+tgl_lahir+
+                "&nama_ibu="+nama_ibu+
+                "&no_hp="+no_hp,
+                response -> {
+                    progressBar.setVisibility(View.GONE);
                     try{
 
-                        String response_body2 = dataHelper.getServer(branchLink +"banking.php?"+
-                                "ib=cek_user_ibanking"+
-                                "&branch="+branch+
-                                "&norek="+norek
-                        );
+                        JSONObject response_json = new JSONObject(response);
+                        JSONObject jsonObject = response_json.getJSONObject("data");
 
-                        response_json2 = new JSONObject(response_body2);
+                        if(!jsonObject.getString("norekening").isEmpty()){
+
+                            /**
+                             * CEK DATA IBANK
+                             */
+                            cekDataBranchIbankingAsyncTask(branchLink,branch,norek);
+
+
+                        }
+
+
+                    }catch (JSONException e1){
+                        new AlertDialog.Builder(context)
+                                .setTitle("Perhatian")
+                                .setMessage("Data yang anda masukkan tidak tepat!")
+                                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        // Continue with delete operation
+                                        dialog.dismiss();
+                                    }
+                                })
+                                .show();
+                        //Toast.makeText(getApplicationContext(),"Data yang anda masukkan tidak tepat",Toast.LENGTH_SHORT).show();
+
+                        e1.printStackTrace();
+                    }
+
+                }, error -> {
+            progressBar.setVisibility(View.GONE);
+            Log.w(DataHelper.getTAG(), "JSONException @ cekDataBranchAsyncTask()\n" + error.getMessage());
+        }
+        );
+
+
+        serverRequest.setRetryPolicy(
+                new DefaultRetryPolicy(0, -1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT)
+        );
+
+        requestQueue.add(serverRequest);
+    }
+
+
+
+    @SuppressLint("NewApi")
+    private void cekDataBranchIbankingAsyncTask(String branchLink, String branch, String norek) {
+        progressBar.setVisibility(View.VISIBLE);
+        RequestQueue requestQueue = AppController.getInstance().getRequestQueue();
+
+        StringRequest serverRequest = new StringRequest(Request.Method.GET,branchLink +"banking.php?"+
+                "ib=cek_user_ibanking"+
+                "&branch="+branch+
+                "&norek="+norek,
+                response -> {
+                    progressBar.setVisibility(View.GONE);
+
+                    JSONObject response_json2 = null;
+                    try {
+                        response_json2 = new JSONObject(response);
                         JSONObject jsonObject2 = response_json2.getJSONObject("data");
 
 
                         if(jsonObject2.getInt("sukses") > 0){
                             //dibuat jadi error saja nanti
-                            Toast.makeText(getApplicationContext(),"Anda sudah pernah membuat akun ibanking",Toast.LENGTH_SHORT).show();
+
+                            new AlertDialog.Builder(context)
+                                    .setTitle("Perhatian")
+                                    .setMessage("Anda sudah pernah membuat akun ibanking!")
+                                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            // Continue with delete operation
+                                            dialog.dismiss();
+                                        }
+                                    })
+                                    .show();
+                            //Toast.makeText(getApplicationContext(),"Anda sudah pernah membuat akun ibanking",Toast.LENGTH_SHORT).show();
                         }else{
-                            Intent intent = new Intent(RegisterActivity.this, RegisterPinActivity.class);
+                            Intent intent = new Intent(context, RegisterPinActivity.class);
                             intent.putExtra("link_api",branchLink);
                             intent.putExtra("branch",branch);
                             intent.putExtra("norek",norek);
                             startActivity(intent);
                         }
-
-                    }catch (JSONException e2){
-
-                        e2.printStackTrace();
-
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
-
-
-                }
-
-
-            }catch (JSONException e1){
-                Toast.makeText(getApplicationContext(),"Data yang anda masukkan tidak tepat",Toast.LENGTH_SHORT).show();
-
-                e1.printStackTrace();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
+                }, error -> {
+            progressBar.setVisibility(View.GONE);
+            Log.w(DataHelper.getTAG(), "JSONException @ cekDataBranchIbankingAsyncTask()\n" + error.getMessage());
         }
+        );
+
+
+        serverRequest.setRetryPolicy(
+                new DefaultRetryPolicy(0, -1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT)
+        );
+
+        requestQueue.add(serverRequest);
     }
-
-
 
 
 

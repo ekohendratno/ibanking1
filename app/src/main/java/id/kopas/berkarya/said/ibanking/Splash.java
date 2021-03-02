@@ -13,15 +13,12 @@ public class Splash extends AppCompatActivity {
     public static final String MyPREFERENCES = "MyPrefs" ;
 
     private final Handler waitHandler = new Handler();
-    private final Runnable waitCallback = new Runnable() {
-        @Override
-        public void run() {
+    private final Runnable waitCallback = () -> {
 
-            Intent intent = new Intent(Splash.this, LoginActivity.class);
+        Intent intent = new Intent(Splash.this, LoginActivity.class);
 
-            startActivity(intent);
-            finish();
-        }
+        startActivity(intent);
+        finish();
     };
 
     @Override

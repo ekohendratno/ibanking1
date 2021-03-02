@@ -146,14 +146,15 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/activity_vertical_margin"
                         app:startIconDrawable="@drawable/ic_calendar_outline"
-                        app:endIconMode="clear_text"
                         android:hint="Tanggal Lahir">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/editTanggalLahir"
-                            android:inputType="date"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content" />
+                            android:layout_height="wrap_content"
+                            android:focusable="false"
+                            android:inputType="date"
+                            android:maxLines="1" />
                     </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -221,5 +222,24 @@
             </LinearLayout>
         </RelativeLayout>
     </androidx.core.widget.NestedScrollView>
+
+
+    <RelativeLayout
+        android:visibility="gone"
+        android:id="@+id/progressBar"
+        android:background="#4D000000"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ProgressBar
+            style="@style/Widget.AppCompat.ProgressBar"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="-7dp"
+            android:indeterminate="true"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+    </RelativeLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

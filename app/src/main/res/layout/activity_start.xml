@@ -51,11 +51,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <ImageView
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:scaleType="centerCrop"
-                    app:srcCompat="@drawable/logo"/>
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:src="@drawable/mbslogo"
+                    android:padding="5dp"
+                    android:layout_marginTop="60dp"
+                    android:layout_gravity="center"
+                    android:layout_width="124dp"
+                    android:layout_height="124dp"/>
 
                 <id.kopas.berkarya.said.ibanking.fun.TextViewCustom
                     app:textViewFont="overpass_bold.ttf"

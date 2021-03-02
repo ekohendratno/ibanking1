@@ -5,6 +5,8 @@
     <color name="colorPrimaryDarkTransparent">#803c4b59</color>
     <color name="colorAccent">#02A644</color>
 
+    <color name="colorRed">#F44336</color>
+    <color name="colorOrange">#FF9800</color>
     <color name="colorHijauGelap">#02A644</color>
     <color name="colorHijauTerang">#1FCA63</color>
     <color name="colorBiru">#1F4FCA</color>

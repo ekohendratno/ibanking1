@@ -1,0 +1,511 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#FFFFFF"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.google.android.material.appbar.AppBarLayout
+        app:elevation="0dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:paddingRight="10dp"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+            app:layout_scrollFlags="scroll|enterAlways"
+            app:layout_collapseMode="pin">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/toolbar_title"
+                    style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
+                    android:fontFamily="@font/overpass_regular"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Konfirmasi Transfer"/>
+
+            </LinearLayout>
+        </androidx.appcompat.widget.Toolbar>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:scrollbars="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:id="@+id/linierLayout2"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:background="#F6F6F6"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <id.kopas.berkarya.said.ibanking.fun.TextViewCustom
+                        app:textViewFont="overpass_thin.ttf"
+                        android:padding="0.0dip"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:textColor="#99000000"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                        android:layout_marginRight="@dimen/activity_horizontal_margin"
+                        android:text="Informasi Data Bank Tujuan"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+
+                    <LinearLayout
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:cardElevation="0dp"
+                            app:cardBackgroundColor="@android:color/white"
+                            app:cardUseCompatPadding="true">
+                            <RelativeLayout
+                                android:paddingTop="16dp"
+                                android:paddingLeft="16dp"
+                                android:paddingRight="16dp"
+                                android:layout_width="fill_parent"
+                                android:layout_height="wrap_content">
+                                <ImageView android:id="@+id/iv0"
+                                    android:visibility="invisible"
+                                    android:padding="8.0dip"
+                                    android:layout_width="40.0dip"
+                                    android:layout_height="40.0dip"
+                                    android:layout_marginRight="16dp"
+                                    app:srcCompat="@drawable/ic_card"
+                                    android:layout_alignParentLeft="true"
+                                    android:layout_alignParentTop="true" />
+                                <TextView
+                                    android:fontFamily="sans-serif-light"
+                                    android:id="@+id/tv0"
+                                    android:layout_width="wrap_content"
+                                    android:layout_marginTop="0.0dip"
+                                    android:layout_marginBottom="0.0dip"
+                                    android:text="0"
+                                    android:layout_toRightOf="@+id/iv0"
+                                    style="@style/text_title" />
+                                <TextView
+                                    android:fontFamily="sans-serif-light"
+                                    android:textSize="12.0sp"
+                                    android:text="Nomor Pembayaran"
+                                    android:layout_width="wrap_content"
+                                    android:layout_marginTop="0.0dip"
+                                    android:layout_toRightOf="@+id/iv0"
+                                    android:layout_below="@+id/tv0"
+                                    style="@style/text_content" />
+                            </RelativeLayout>
+                        </androidx.cardview.widget.CardView>
+
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:cardElevation="0dp"
+                            app:cardBackgroundColor="@android:color/white"
+                            app:cardUseCompatPadding="true">
+                            <RelativeLayout
+                                android:paddingLeft="16dp"
+                                android:paddingRight="16dp"
+                                android:layout_width="fill_parent"
+                                android:layout_height="wrap_content">
+                                <ImageView android:id="@+id/iv1"
+                                    android:padding="8.0dip"
+                                    android:layout_width="40.0dip"
+                                    android:layout_height="40.0dip"
+                                    android:layout_marginRight="16dp"
+                                    app:srcCompat="@drawable/ic_card"
+                                    android:layout_alignParentLeft="true"
+                                    android:layout_alignParentTop="true" />
+                                <TextView
+                                    android:fontFamily="sans-serif-light"
+                                    android:id="@+id/tv1"
+                                    android:layout_width="wrap_content"
+                                    android:layout_marginTop="0.0dip"
+                                    android:layout_marginBottom="0.0dip"
+                                    android:text="N.A"
+                                    android:layout_toRightOf="@+id/iv1"
+                                    style="@style/text_title" />
+                                <TextView
+                                    android:fontFamily="sans-serif-light"
+                                    android:textSize="12.0sp"
+                                    android:text="Nomor Rekening Bank"
+                                    android:layout_width="wrap_content"
+                                    android:layout_marginTop="0.0dip"
+                                    android:layout_toRightOf="@+id/iv1"
+                                    android:layout_below="@+id/tv1"
+                                    style="@style/text_content" />
+                            </RelativeLayout>
+                        </androidx.cardview.widget.CardView>
+
+
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:cardElevation="0dp"
+                            app:cardBackgroundColor="@android:color/white"
+                            app:cardUseCompatPadding="true">
+                            <RelativeLayout
+                                android:paddingLeft="16dp"
+                                android:paddingRight="16dp"
+                                android:layout_width="fill_parent"
+                                android:layout_height="wrap_content">
+                                <ImageView android:id="@+id/iv2"
+                                    android:padding="8.0dip"
+                                    android:layout_width="40.0dip"
+                                    android:layout_height="40.0dip"
+                                    android:layout_marginRight="16dp"
+                                    app:srcCompat="@drawable/ic_person_outline"
+                                    android:layout_alignParentLeft="true"
+                                    android:layout_alignParentTop="true" />
+                                <TextView
+                                    android:fontFamily="sans-serif-light"
+                                    android:id="@+id/tv2"
+                                    android:layout_width="wrap_content"
+                                    android:layout_marginTop="0.0dip"
+                                    android:layout_marginBottom="0.0dip"
+                                    android:text="N.A"
+                                    android:layout_toRightOf="@+id/iv2"
+                                    style="@style/text_title" />
+                                <TextView
+                                    android:fontFamily="sans-serif-light"
+                                    android:textSize="12.0sp"
+                                    android:text="Nama Pemilik Rekening Tujuan"
+                                    android:layout_width="wrap_content"
+                                    android:layout_marginTop="0.0dip"
+                                    android:layout_toRightOf="@+id/iv2"
+                                    android:layout_below="@+id/tv2"
+                                    style="@style/text_content" />
+                            </RelativeLayout>
+                        </androidx.cardview.widget.CardView>
+
+
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:cardElevation="0dp"
+                            app:cardBackgroundColor="@android:color/white"
+                            app:cardUseCompatPadding="true">
+                            <RelativeLayout
+                                android:paddingLeft="16dp"
+                                android:paddingRight="16dp"
+                                android:layout_width="fill_parent"
+                                android:layout_height="wrap_content">
+                                <ImageView android:id="@+id/iv3"
+                                    android:padding="8.0dip"
+                                    android:layout_width="40.0dip"
+                                    android:layout_height="40.0dip"
+                                    android:layout_marginRight="16dp"
+                                    app:srcCompat="@drawable/ic_home"
+                                    android:layout_alignParentLeft="true"
+                                    android:layout_alignParentTop="true" />
+                                <TextView
+                                    android:fontFamily="sans-serif-light"
+                                    android:id="@+id/tv3"
+                                    android:layout_width="wrap_content"
+                                    android:layout_marginTop="0.0dip"
+                                    android:layout_marginBottom="0.0dip"
+                                    android:text="N.A"
+                                    android:layout_toRightOf="@+id/iv3"
+                                    style="@style/text_title" />
+                                <TextView
+                                    android:fontFamily="sans-serif-light"
+                                    android:textSize="12.0sp"
+                                    android:text="Alamat Penerima"
+                                    android:layout_width="wrap_content"
+                                    android:layout_marginTop="0.0dip"
+                                    android:layout_toRightOf="@+id/iv3"
+                                    android:layout_below="@+id/tv3"
+                                    style="@style/text_content" />
+                            </RelativeLayout>
+                        </androidx.cardview.widget.CardView>
+
+
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:cardElevation="0dp"
+                            app:cardBackgroundColor="@android:color/white"
+                            app:cardUseCompatPadding="true">
+                            <RelativeLayout
+                                android:paddingLeft="16dp"
+                                android:paddingRight="16dp"
+                                android:layout_width="fill_parent"
+                                android:layout_height="wrap_content">
+                                <ImageView android:id="@+id/iv4"
+                                    android:padding="8.0dip"
+                                    android:layout_width="40.0dip"
+                                    android:layout_height="40.0dip"
+                                    android:layout_marginRight="16dp"
+                                    app:srcCompat="@drawable/ic_calendar_outline"
+                                    android:layout_alignParentLeft="true"
+                                    android:layout_alignParentTop="true" />
+                                <TextView
+                                    android:fontFamily="sans-serif-light"
+                                    android:id="@+id/tv4"
+                                    android:layout_width="wrap_content"
+                                    android:layout_marginTop="0.0dip"
+                                    android:layout_marginBottom="0.0dip"
+                                    android:text="N.A"
+                                    android:layout_toRightOf="@+id/iv4"
+                                    style="@style/text_title" />
+                                <TextView
+                                    android:fontFamily="sans-serif-light"
+                                    android:textSize="12.0sp"
+                                    android:text="Tanggal Transfer"
+                                    android:layout_width="wrap_content"
+                                    android:layout_marginTop="0.0dip"
+                                    android:layout_toRightOf="@+id/iv4"
+                                    android:layout_below="@+id/tv4"
+                                    style="@style/text_content" />
+                            </RelativeLayout>
+                        </androidx.cardview.widget.CardView>
+
+
+
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:cardElevation="0dp"
+                            app:cardBackgroundColor="@android:color/white"
+                            app:cardUseCompatPadding="true">
+                            <RelativeLayout
+                                android:paddingLeft="16dp"
+                                android:paddingRight="16dp"
+                                android:layout_width="fill_parent"
+                                android:layout_height="wrap_content">
+                                <ImageView android:id="@+id/iv5"
+                                    android:padding="8.0dip"
+                                    android:layout_width="40.0dip"
+                                    android:layout_height="40.0dip"
+                                    android:layout_marginRight="16dp"
+                                    app:srcCompat="@drawable/ic_baseline_short_text_24"
+                                    android:layout_alignParentLeft="true"
+                                    android:layout_alignParentTop="true" />
+                                <TextView
+                                    android:fontFamily="sans-serif-light"
+                                    android:id="@+id/tv5"
+                                    android:layout_width="wrap_content"
+                                    android:layout_marginTop="0.0dip"
+                                    android:layout_marginBottom="0.0dip"
+                                    android:text="N.A"
+                                    android:layout_toRightOf="@+id/iv5"
+                                    style="@style/text_title" />
+                                <TextView
+                                    android:fontFamily="sans-serif-light"
+                                    android:textSize="12.0sp"
+                                    android:text="Keterangan"
+                                    android:layout_width="wrap_content"
+                                    android:layout_marginTop="0.0dip"
+                                    android:layout_toRightOf="@+id/iv5"
+                                    android:layout_below="@+id/tv5"
+                                    style="@style/text_content" />
+                            </RelativeLayout>
+                        </androidx.cardview.widget.CardView>
+
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:cardElevation="0dp"
+                            app:cardBackgroundColor="@android:color/white"
+                            app:cardUseCompatPadding="true">
+                            <RelativeLayout
+                                android:paddingLeft="16dp"
+                                android:paddingRight="16dp"
+                                android:layout_width="fill_parent"
+                                android:layout_height="wrap_content">
+                                <ImageView android:id="@+id/iv6"
+                                    android:padding="8.0dip"
+                                    android:layout_width="40.0dip"
+                                    android:layout_height="40.0dip"
+                                    android:layout_marginRight="16dp"
+                                    app:srcCompat="@drawable/ic_wallet_outline"
+                                    android:layout_alignParentLeft="true"
+                                    android:layout_alignParentTop="true" />
+                                <TextView
+                                    android:fontFamily="sans-serif-light"
+                                    android:id="@+id/tv6"
+                                    android:layout_width="wrap_content"
+                                    android:layout_marginTop="0.0dip"
+                                    android:layout_marginBottom="0.0dip"
+                                    android:text="N.A"
+                                    android:layout_toRightOf="@+id/iv6"
+                                    style="@style/text_title" />
+                                <TextView
+                                    android:fontFamily="sans-serif-light"
+                                    android:textSize="12.0sp"
+                                    android:text="Nominal Transaksi"
+                                    android:layout_width="wrap_content"
+                                    android:layout_marginTop="0.0dip"
+                                    android:layout_toRightOf="@+id/iv6"
+                                    android:layout_below="@+id/tv6"
+                                    style="@style/text_content" />
+                            </RelativeLayout>
+                        </androidx.cardview.widget.CardView>
+
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:cardElevation="0dp"
+                            app:cardBackgroundColor="@android:color/white"
+                            app:cardUseCompatPadding="true">
+                            <RelativeLayout
+                                android:paddingLeft="16dp"
+                                android:paddingRight="16dp"
+                                android:layout_width="fill_parent"
+                                android:layout_height="wrap_content">
+                                <ImageView android:id="@+id/iv7"
+                                    android:visibility="invisible"
+                                    android:padding="8.0dip"
+                                    android:layout_width="40.0dip"
+                                    android:layout_height="40.0dip"
+                                    android:layout_marginRight="16dp"
+                                    app:srcCompat="@drawable/ic_wallet_outline"
+                                    android:layout_alignParentLeft="true"
+                                    android:layout_alignParentTop="true" />
+                                <TextView
+                                    android:fontFamily="sans-serif-light"
+                                    android:id="@+id/tv7"
+                                    android:layout_width="wrap_content"
+                                    android:layout_marginTop="0.0dip"
+                                    android:layout_marginBottom="0.0dip"
+                                    android:text="N.A"
+                                    android:layout_toRightOf="@+id/iv7"
+                                    style="@style/text_title" />
+                                <TextView
+                                    android:fontFamily="sans-serif-light"
+                                    android:textSize="12.0sp"
+                                    android:text="Biaya Administrasi"
+                                    android:layout_width="wrap_content"
+                                    android:layout_marginTop="0.0dip"
+                                    android:layout_toRightOf="@+id/iv7"
+                                    android:layout_below="@+id/tv7"
+                                    style="@style/text_content" />
+                            </RelativeLayout>
+                        </androidx.cardview.widget.CardView>
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:cardElevation="0dp"
+                            app:cardBackgroundColor="@android:color/white"
+                            app:cardUseCompatPadding="true">
+                            <RelativeLayout
+                                android:paddingLeft="16dp"
+                                android:paddingRight="16dp"
+                                android:layout_width="fill_parent"
+                                android:layout_height="wrap_content">
+                                <ImageView android:id="@+id/iv8"
+                                    android:padding="8.0dip"
+                                    android:visibility="invisible"
+                                    android:layout_width="40.0dip"
+                                    android:layout_height="40.0dip"
+                                    android:layout_marginRight="16dp"
+                                    app:srcCompat="@drawable/ic_wallet_outline"
+                                    android:layout_alignParentLeft="true"
+                                    android:layout_alignParentTop="true" />
+                                <TextView
+                                    android:fontFamily="sans-serif-light"
+                                    android:id="@+id/tv8"
+                                    android:layout_width="wrap_content"
+                                    android:layout_marginTop="0.0dip"
+                                    android:layout_marginBottom="0.0dip"
+                                    android:text="N.A"
+                                    android:layout_toRightOf="@+id/iv8"
+                                    style="@style/text_title" />
+                                <TextView
+                                    android:fontFamily="sans-serif-light"
+                                    android:textSize="12.0sp"
+                                    android:text="Total Transfer"
+                                    android:layout_width="wrap_content"
+                                    android:layout_marginTop="0.0dip"
+                                    android:layout_toRightOf="@+id/iv8"
+                                    android:layout_below="@+id/tv8"
+                                    style="@style/text_content" />
+                            </RelativeLayout>
+                        </androidx.cardview.widget.CardView>
+
+
+                    </LinearLayout>
+
+                </LinearLayout>
+                <com.google.android.material.button.MaterialButton
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:backgroundTint="@color/colorBiru"
+                    android:textColor="@color/colorWhite"
+                    android:id="@+id/actLanjutkan"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minHeight="60dp"
+                    android:textAllCaps="true"
+                    app:strokeWidth="0dp"
+                    app:elevation="0dp"
+                    android:elevation="0dp"
+                    android:layout_margin="@dimen/activity_vertical_margin"
+                    android:text="LANJUTKAN" />
+
+            </LinearLayout>
+        </RelativeLayout>
+    </androidx.core.widget.NestedScrollView>
+
+
+    <RelativeLayout
+        android:visibility="gone"
+        android:id="@+id/progressBar"
+        android:background="#4D000000"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ProgressBar
+            style="@style/Widget.AppCompat.ProgressBar"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="-7dp"
+            android:indeterminate="true"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+    </RelativeLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

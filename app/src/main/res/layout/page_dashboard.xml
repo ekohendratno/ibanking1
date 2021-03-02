@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.core.widget.NestedScrollView
         android:layout_above="@+id/navigation"
@@ -47,9 +47,18 @@
 
                     <RelativeLayout
                         android:padding="@dimen/list_vertical_margin"
-                        android:layout_marginBottom="50dp"
+                        android:layout_marginBottom="20dp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
+
+
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/imageLogo"
+                            android:layout_width="64dp"
+                            android:layout_height="64dp"
+                            android:src="@drawable/logo"
+                            app:civ_border_width="0dp"
+                            app:civ_border_color="#FF000000"/>
 
                         <LinearLayout
                             android:layout_alignParentRight="true"
@@ -81,7 +90,7 @@
                                     android:textColor="#FFFFFF"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Tgk Zulkarnaini"/>
+                                    android:text="-"/>
                             </LinearLayout>
 
                             <de.hdodenhof.circleimageview.CircleImageView
@@ -98,7 +107,7 @@
                     <LinearLayout
                         android:orientation="vertical"
                         android:layout_gravity="center"
-                        android:layout_marginBottom="30dp"
+                        android:layout_marginBottom="20dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content">
 
@@ -108,6 +117,7 @@
                             android:layout_height="wrap_content">
 
                             <id.kopas.berkarya.said.ibanking.fun.TextViewCustom
+                                android:visibility="gone"
                                 android:id="@+id/tvCurency"
                                 app:textViewFont="overpass_bold.ttf"
                                 android:textSize="14dp"
@@ -128,7 +138,7 @@
                                 android:textColor="#FFFFFF"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="3.454.049,-"/>
+                                android:text="Rp0"/>
                         </LinearLayout>
 
                         <id.kopas.berkarya.said.ibanking.fun.TextViewCustom
@@ -261,7 +271,7 @@
                     android:orientation="vertical"
                     android:layout_height="wrap_content"
                     app:cardElevation="3dp"
-                    app:cardCornerRadius="10dp"
+                    app:cardCornerRadius="0dp"
                     android:backgroundTint="#FFFFFF">
 
                     <LinearLayout
@@ -330,7 +340,7 @@
                                     android:textColor="#606060"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Permintaan Uang"/>
+                                    android:text="Permintaan\nUang"/>
 
                             </LinearLayout>
 
@@ -366,6 +376,11 @@
 
 
 
+                        <View
+                            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                            android:layout_marginRight="@dimen/activity_horizontal_margin"
+                            android:layout_above="@+id/addView"
+                            style="@style/divider" />
 
 
                         <LinearLayout
@@ -374,6 +389,7 @@
                             android:layout_height="match_parent">
 
                             <LinearLayout
+                                android:id="@+id/pageEmoney"
                                 android:background="?selectableItemBackground"
                                 android:orientation="vertical"
                                 android:layout_width="100dp"
@@ -402,6 +418,7 @@
                             </LinearLayout>
 
                             <LinearLayout
+                                android:id="@+id/pagePembayaran1"
                                 android:background="?selectableItemBackground"
                                 android:orientation="vertical"
                                 android:layout_width="100dp"
@@ -430,6 +447,7 @@
                             </LinearLayout>
 
                             <LinearLayout
+                                android:id="@+id/pageHistoryLogin"
                                 android:background="?selectableItemBackground"
                                 android:orientation="vertical"
                                 android:layout_width="100dp"
@@ -453,13 +471,18 @@
                                     android:textColor="#606060"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Transaksi"/>
+                                    android:text="History Login"/>
 
                             </LinearLayout>
                         </LinearLayout>
 
 
 
+                        <View
+                            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                            android:layout_marginRight="@dimen/activity_horizontal_margin"
+                            android:layout_above="@+id/addView"
+                            style="@style/divider" />
 
 
                         <LinearLayout
@@ -468,6 +491,7 @@
                             android:layout_height="match_parent">
 
                             <LinearLayout
+                                android:id="@+id/pageHistoryTransaksi"
                                 android:background="?selectableItemBackground"
                                 android:orientation="vertical"
                                 android:layout_width="100dp"
@@ -491,11 +515,12 @@
                                     android:textColor="#606060"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Setoran Online"/>
+                                    android:text="Histori\nTransaksi"/>
 
                             </LinearLayout>
 
                             <LinearLayout
+                                android:id="@+id/pageInfoRekening"
                                 android:background="?selectableItemBackground"
                                 android:orientation="vertical"
                                 android:layout_width="100dp"
@@ -519,7 +544,7 @@
                                     android:textColor="#606060"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Info Rekening"/>
+                                    android:text="Info\nRekening"/>
 
                             </LinearLayout>
 
@@ -542,4 +567,23 @@
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
-</RelativeLayout>
+
+    <RelativeLayout
+        android:visibility="gone"
+        android:id="@+id/progressBar"
+        android:background="#4D000000"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ProgressBar
+            style="@style/Widget.AppCompat.ProgressBar"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="-7dp"
+            android:indeterminate="true"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+    </RelativeLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
