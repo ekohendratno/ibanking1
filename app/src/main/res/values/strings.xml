@@ -2,4 +2,11 @@
     <string name="app_name">MINI BANK SANTRI</string>
     <string name="app_name_title">MBS</string>
     <string name="app_name_desc">MINI BANK SANTRI</string>
+
+    <string name="email_developer">kopasprojects@gmail.com</string>
+    <string name="choose_email_client">Pilih klien email</string>
+    <string name="url_apps_web_term">https://berkarya.kopas.id/produk/ibanking/</string>
+    <string name="url_apps_web">https://ibanking.kopas.id/</string>
+    <string name="url_apps">https://play.google.com/store/apps/details?id=id.kopas.berkarya.said.ibanking</string>
+    <string name="url_terms">https://berkarya.kopas.id/privacy-policy</string>
 </resources>

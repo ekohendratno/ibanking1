@@ -5,10 +5,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import androidx.annotation.Nullable;
@@ -18,15 +20,22 @@ import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
+import com.squareup.picasso.NetworkPolicy;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+import id.kopas.berkarya.said.ibanking.MainActivity;
 import id.kopas.berkarya.said.ibanking.R;
 import id.kopas.berkarya.said.ibanking.Splash;
 import id.kopas.berkarya.said.ibanking.fun.AppController;
 import id.kopas.berkarya.said.ibanking.fun.DataHelper;
 import id.kopas.berkarya.said.ibanking.fun.TextViewCustom;
+import id.kopas.berkarya.said.ibanking.pages.PageEWallet;
+import id.kopas.berkarya.said.ibanking.pages.PageMutasi;
+import id.kopas.berkarya.said.ibanking.pages.PagePembayaran;
 import id.kopas.berkarya.said.ibanking.pages.PageTransaksi;
 import id.kopas.berkarya.said.ibanking.pages.PageTransfer;
 
@@ -36,7 +45,7 @@ public class PageDashboard extends Fragment {
         return new PageDashboard();
     }
 
-    String link_api, branch, norek, pinib;
+    String link_api, link_api_logo, branch, norek, pinib;
     static SharedPreferences sharedpreferences;
     DataHelper dataHelper;
     Context context;
@@ -54,6 +63,7 @@ public class PageDashboard extends Fragment {
         progressBar = (RelativeLayout) rootView.findViewById(R.id.progressBar);
 
         link_api = sharedpreferences.getString("link_api", "");
+        link_api_logo = sharedpreferences.getString("link_api_logo", "");
         branch = sharedpreferences.getString("branch", "");
         norek = sharedpreferences.getString("norek", "");
         pinib = sharedpreferences.getString("pinib", "");
@@ -62,6 +72,7 @@ public class PageDashboard extends Fragment {
         dataHelper = new DataHelper(context);
 
 
+        ImageView imageLogo = rootView.findViewById(R.id.imageLogo);
         tvNamaPengguna = rootView.findViewById(R.id.tvNamaPengguna);
         tvSaldoSekarang = rootView.findViewById(R.id.tvSaldoSekarang);
         tvSaldoSekarang.setText( dataHelper.formatRupiah("0"));
@@ -72,26 +83,33 @@ public class PageDashboard extends Fragment {
             startActivity(intent);
         });
         rootView.findViewById(R.id.pagePembayaran).setOnClickListener(v->{
-            Intent intent = new Intent(getContext(), PageTransaksi.class);
+            Intent intent = new Intent(getContext(), PagePembayaran.class);
             startActivity(intent);
         });
         rootView.findViewById(R.id.pageTopUp).setOnClickListener(v->{
             Intent intent = new Intent(getContext(), PageTransaksi.class);
             startActivity(intent);
         });
-        rootView.findViewById(R.id.pageKirimUang).setOnClickListener(v->{
-            Intent intent = new Intent(getContext(), PageTransaksi.class);
-            startActivity(intent);
-        });
-        rootView.findViewById(R.id.pagePermintaanUang).setOnClickListener(v->{
-            Intent intent = new Intent(getContext(), PageTransaksi.class);
-            startActivity(intent);
-        });
-        rootView.findViewById(R.id.pagePembelian).setOnClickListener(v->{
-            Intent intent = new Intent(getContext(), PageTransaksi.class);
+
+        rootView.findViewById(R.id.pageEmoney).setOnClickListener(v->{
+            Intent intent = new Intent(getContext(), PageEWallet.class);
             startActivity(intent);
         });
 
+        rootView.findViewById(R.id.pageMutasi).setOnClickListener(v->{
+            Intent intent = new Intent(getContext(), PageMutasi.class);
+            startActivity(intent);
+        });
+
+
+
+        if(!TextUtils.isEmpty(link_api_logo)){
+            Picasso.with(context)
+                    .load(link_api_logo)
+                    .placeholder(R.drawable.progress_animation)
+                    .networkPolicy(NetworkPolicy.NO_CACHE)
+                    .into(imageLogo);
+        }
 
 
         postSaldosyncTask();

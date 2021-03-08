@@ -57,7 +57,6 @@ import id.kopas.berkarya.said.ibanking.models.Branch;
 public class LoginActivity extends AppCompatActivity {
     String TAG = "LoginActivity";
 
-    String akun, password;
 
     static RelativeLayout progressBar;
 
@@ -65,10 +64,16 @@ public class LoginActivity extends AppCompatActivity {
 
     static AppCompatEditText editKeyBranch;
     static AppCompatEditText editKeyBranchLinkApi;
+    static AppCompatEditText editKeyBranchLinkApiLogo;
     static AutoCompleteTextView editBranch;
 
     static DataHelper dataHelper;
     static Context context;
+
+    String akun, password;
+    String link_api, link_api_logo, branch, branch_nama;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,8 +82,6 @@ public class LoginActivity extends AppCompatActivity {
 
         context = LoginActivity.this;
         sharedpreferences = getSharedPreferences(Splash.MyPREFERENCES, Context.MODE_PRIVATE);
-
-        requestStoragePermission();
 
         context = LoginActivity.this;
 
@@ -91,13 +94,14 @@ public class LoginActivity extends AppCompatActivity {
 
         editKeyBranch = findViewById(R.id.editKeyBranch);
         editKeyBranchLinkApi = findViewById(R.id.editKeyBranchLinkApi);
+        editKeyBranchLinkApiLogo = findViewById(R.id.editKeyBranchLinkApiLogo);
         editBranch = findViewById(R.id.editBranch);
 
         final TextInputEditText editAkun = findViewById(R.id.editAkun);
         final TextInputEditText editPassword = findViewById(R.id.editPassword);
 
         final MaterialButton actSignIn = findViewById(R.id.actSignIn);
-        final TextViewCustom actSignUp = findViewById(R.id.actSignUp);
+        final TextViewCustom actLostPassword = findViewById(R.id.actLostPassword);
 
         //txtAkun.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.overpass_regular));
         //editPassword.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.overpass_regular));
@@ -108,11 +112,13 @@ public class LoginActivity extends AppCompatActivity {
             password = editPassword.getText().toString();
 
             if (!TextUtils.isEmpty(akun) && !TextUtils.isEmpty(password)) {
-                String link_api = editKeyBranchLinkApi.getText().toString();
-                String branch = editKeyBranch.getText().toString();
+                link_api = editKeyBranchLinkApi.getText().toString();
+                link_api_logo = editKeyBranchLinkApiLogo.getText().toString();
+                branch = editKeyBranch.getText().toString();
+                branch_nama = editBranch.getText().toString();
 
                 if (!TextUtils.isEmpty(branch) && !TextUtils.isEmpty(link_api) && Patterns.WEB_URL.matcher(link_api ).matches()) {
-                    cekDataBranchIbankingAsyncTask(link_api, branch, akun,password);
+                    cekDataBranchIbankingAsyncTask();
                 }else{
                     Toast.makeText(v.getContext(), "Akun atau Sandi belum diisi!", Toast.LENGTH_LONG).show();
                 }
@@ -121,9 +127,9 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        actSignUp.setOnClickListener(v -> {
+        actLostPassword.setOnClickListener(v -> {
 
-            Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+            Intent intent = new Intent(LoginActivity.this, LostPasswordActivity.class);
             startActivity(intent);
 
         });
@@ -139,22 +145,21 @@ public class LoginActivity extends AppCompatActivity {
      * CEK DATA IBANK
      */
     @SuppressLint("NewApi")
-    private void cekDataBranchIbankingAsyncTask(String branchLink, String branch, String norek, String pin) {
-        if(!progressBar.isShown()) progressBar.setVisibility(View.VISIBLE);
+    private void cekDataBranchIbankingAsyncTask() {
+        progressBar.setVisibility(View.VISIBLE);
         RequestQueue requestQueue = AppController.getInstance().getRequestQueue();
 
-        CacheRequest serverRequest = new CacheRequest(Request.Method.GET,branchLink +"banking.php?"+
+        StringRequest serverRequest = new StringRequest(Request.Method.GET,link_api +"banking.php?"+
                 "ib=validasi_login_ibanking"+
                 "&branch="+branch+
-                "&norek="+norek+
-                "&pin_ib="+pin,
+                "&norek="+akun+
+                "&pin_ib="+password,
                 req -> {
-                    if(progressBar.isShown()) progressBar.setVisibility(View.GONE);
+                    progressBar.setVisibility(View.GONE);
                     JSONObject response_json2 = null;
                     try {
-                        final String jsonString = new String(req.data, HttpHeaderParser.parseCharset(req.headers));
 
-                        response_json2 = new JSONObject(jsonString);
+                        response_json2 = new JSONObject(req);
                         JSONObject jsonObject2 = response_json2.getJSONObject("data");
 
 
@@ -162,7 +167,7 @@ public class LoginActivity extends AppCompatActivity {
                             //dibuat jadi error saja nanti
 
                             //For apps targeting SDK higher than Build.VERSION_CODES.O_MR1 this field is set to UNKNOWN.
-                            final String security_phone = dataHelper.getIdUnique();
+                            //final String security_phone = dataHelper.getIdUnique();
                             final String phone_model = Build.MODEL;
                             //String serial = Build.SERIAL;
                             //String android_id = Settings.Secure.getString(context.getContentResolver(),Settings.Secure.ANDROID_ID);
@@ -171,13 +176,12 @@ public class LoginActivity extends AppCompatActivity {
 
                             String gpsCoords = dataHelper.getGPSCoordinates(0, false, "");
 
-
-
+                            String nama = jsonObject2.getString("nama");
 
 
 
                             //if(jsonObject2.getString("security_phone").equalsIgnoreCase(myKey)){
-                            postStatusLoginAsyncTask(branchLink,branch,norek,gpsCoords,phone_model,pin);
+                            postStatusLoginAsyncTask(nama,gpsCoords,phone_model);
                             /**}else{
                              new AlertDialog.Builder(context)
                              .setTitle("Info")
@@ -220,11 +224,9 @@ public class LoginActivity extends AppCompatActivity {
                                 .show();
 
                         e.printStackTrace();
-                    } catch (UnsupportedEncodingException e) {
-                        e.printStackTrace();
                     }
                 }, error -> {
-            if(progressBar.isShown())  progressBar.setVisibility(View.GONE);
+             progressBar.setVisibility(View.GONE);
             Log.w(DataHelper.getTAG(), "JSONException @ cekDataBranchIbankingAsyncTask()\n" + error.getMessage());
         }
         );
@@ -237,22 +239,24 @@ public class LoginActivity extends AppCompatActivity {
         requestQueue.add(serverRequest);
     }
 
+    int ex = 1;
+
     /**
      * UPDATE STATUS LOGIN
      */
     @SuppressLint("NewApi")
-    private void postStatusLoginAsyncTask(String branchLink, String branch, String norek,String lokasi,String merek_hp,String pinib) {
-        if(!progressBar.isShown()) progressBar.setVisibility(View.VISIBLE);
+    private void postStatusLoginAsyncTask(String nama,String lokasi,String merek_hp) {
+        progressBar.setVisibility(View.VISIBLE);
 
         RequestQueue requestQueue = AppController.getInstance().getRequestQueue();
 
-        StringRequest serverRequest = new StringRequest(Request.Method.GET, branchLink +"banking.php?"+
+        StringRequest serverRequest = new StringRequest(Request.Method.GET, link_api +"banking.php?"+
                 "ib=update_status_login"+
                 "&branch="+branch+
-                "&norek="+norek,
+                "&norek="+akun,
 
                 response -> {
-                    if(progressBar.isShown()) progressBar.setVisibility(View.GONE);
+                    progressBar.setVisibility(View.GONE);
 
                     try {
                         JSONObject response_json2 = new JSONObject(response);
@@ -261,18 +265,27 @@ public class LoginActivity extends AppCompatActivity {
 
                         if(jsonObject2.getString("pesan").equalsIgnoreCase("SUKSES")){
 
-                            SharedPreferences.Editor editor = sharedpreferences.edit();
-                            editor.putString("link_api",branchLink);
-                            editor.putString("branch",branch);
-                            editor.putString("norek",norek);
-                            editor.putString("pinib",pinib);
-                            editor.apply();
+                            if(ex == 1){
 
-                            Intent intent = new Intent(context, MainActivity.class);
-                            startActivity(intent);
-                            finish();
+                                SharedPreferences.Editor editor = sharedpreferences.edit();
+                                editor.putString("link_api",link_api);
+                                editor.putString("link_logo_bank",link_api_logo);
+                                editor.putString("branch",branch);
+                                editor.putString("branch_nama",branch_nama);
+                                editor.putString("nama",nama);
+                                editor.putString("norek",akun);
+                                editor.putString("pinib",password);
+                                editor.apply();
 
-                            Toast.makeText(context,"Berhasil masuk",Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(context, MainActivity.class);
+                                startActivity(intent);
+                                finish();
+
+                                Toast.makeText(context,"Berhasil masuk",Toast.LENGTH_SHORT).show();
+
+                            }
+
+                            ex++;
 
                         }else{
                             new AlertDialog.Builder(context)
@@ -292,15 +305,15 @@ public class LoginActivity extends AppCompatActivity {
                     }
 
                 }, error -> {
-                    if(progressBar.isShown()) progressBar.setVisibility(View.GONE);
+                    progressBar.setVisibility(View.GONE);
                     Log.w(DataHelper.getTAG(), "JSONException @ postStatusLoginAsyncTask()\n" + error.getMessage());
                 }
         );
 
 
-        StringRequest serverRequest2 = new StringRequest(Request.Method.GET, branchLink +"banking.php?"+
+        StringRequest serverRequest2 = new StringRequest(Request.Method.GET, link_api +"banking.php?"+
                 "ib=insert_history_login_banking"+
-                "&norek="+norek+
+                "&norek="+akun+
                 "&lokasi="+lokasi+
                 "&merek_hp="+merek_hp,
                 response -> {}, error -> {Log.w(DataHelper.getTAG(), "JSONException @ postStatusLoginAsyncTask()\n" + error.getMessage());}
@@ -327,12 +340,12 @@ public class LoginActivity extends AppCompatActivity {
 
     @SuppressLint("NewApi")
     private static void initBranchAsyncTask() {
-        if(!progressBar.isShown()) progressBar.setVisibility(View.VISIBLE);
+        progressBar.setVisibility(View.VISIBLE);
         RequestQueue requestQueue = AppController.getInstance().getRequestQueue();
 
         CacheRequest serverRequest = new CacheRequest(Request.Method.GET,DataHelper.getAlamatServer() + "/informasi_bank",
                 req -> {
-                    if(progressBar.isShown()) progressBar.setVisibility(View.GONE);
+                    progressBar.setVisibility(View.GONE);
                     try {
                         final String jsonString = new String(req.data, HttpHeaderParser.parseCharset(req.headers));
                         if (!req.equals("")) {
@@ -378,7 +391,7 @@ public class LoginActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
                 }, error -> {
-                    if(progressBar.isShown()) progressBar.setVisibility(View.GONE);
+                    progressBar.setVisibility(View.GONE);
                     Log.w(DataHelper.getTAG(), "JSONException @ initBranchAsyncTask()\n" + error.getMessage());
                 }
         );
@@ -404,91 +417,10 @@ public class LoginActivity extends AppCompatActivity {
         super.onDestroy();
     }
 
-    public void onStart() {
-        super.onStart();
-
-
-        SharedPreferences.Editor editor = sharedpreferences.edit();
-        editor.remove("link_api");
-        editor.remove("branch");
-        editor.remove("norek");
-        editor.apply();
-    }
-
-    private void updateUI() {
-    }
-
-
-    private void requestStoragePermission() {
-        String[] permissions = {
-                Manifest.permission.ACCESS_FINE_LOCATION,
-                Manifest.permission.ACCESS_COARSE_LOCATION,
-                Manifest.permission.READ_PHONE_STATE,
-                Manifest.permission.READ_EXTERNAL_STORAGE,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE};
-        Permissions.check(this/*context*/, permissions, null/*rationale*/, null/*options*/, new PermissionHandler() {
-            @Override
-            public void onGranted() {
-                // do your task.
-                Log.i("izin", "Semua izin telah disetujui!");
-
-
-                //TelephonyManager telephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
-                //String telephonyManagerSimSerialNumber = telephonyManager.getSimSerialNumber();
-                //String sim = telephonyManager.getLine1Number();
-
-                /**
-                TelephonyManager phoneMgr = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
-                if (ActivityCompat.checkSelfPermission(LoginActivity.this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
-                    return;
-                }
-
-                String number = phoneMgr.getLine1Number();
-                if(TextUtils.isEmpty(number)){
-                    number = phoneMgr.getDeviceId();
-                }
-                Log.e("no_hp_detect", number);*/
-
-            }
-
-            @Override
-            public void onDenied(Context context, ArrayList<String> deniedPermissions) {
-                // permission denied, block the feature.
-                showSettingsDialog();
-            }
-        });
-    }
-
-    private void showSettingsDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Membutuhkan Izin");
-        builder.setMessage("Beberapa fitur diperlukan untuk aplikasi ini. Kamu Setujui di pengaturan.");
-        builder.setPositiveButton("KE PENGATURAN", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
-                openSettings();
-            }
-        });
-        builder.setNegativeButton("BATAL", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
-            }
-        });
-        builder.show();
-
-    }
-
-    private void openSettings() {
-        Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-        Uri uri = Uri.fromParts("package", getPackageName(), null);
-        intent.setData(uri);
-        startActivityForResult(intent, 101);
-    }
-
-
+    @Override
     public void onBackPressed() {
-        super.onBackPressed();
+        Intent intent = new Intent(LoginActivity.this, OptionalActivity.class);
+        startActivity(intent);
+        finish();
     }
 }

@@ -259,7 +259,7 @@ public class PageTransfer extends AppCompatActivity {
      */
     @SuppressLint("NewApi")
     private void cekDataBranchIbankingAsyncTask() {
-        if(!progressBar.isShown()) progressBar.setVisibility(View.VISIBLE);
+        progressBar.setVisibility(View.VISIBLE);
         RequestQueue requestQueue = AppController.getInstance().getRequestQueue();
 
         CacheRequest serverRequest = new CacheRequest(Request.Method.GET,link_api +"banking.php?"+
@@ -268,7 +268,7 @@ public class PageTransfer extends AppCompatActivity {
                 "&norek="+norek+
                 "&pin_ib="+pinib,
                 req -> {
-                    if(progressBar.isShown()) progressBar.setVisibility(View.GONE);
+                    progressBar.setVisibility(View.GONE);
                     JSONObject response_json2 = null;
                     try {
                         final String jsonString = new String(req.data, HttpHeaderParser.parseCharset(req.headers));
@@ -302,7 +302,7 @@ public class PageTransfer extends AppCompatActivity {
                         e.printStackTrace();
                     }
                 }, error -> {
-            if(progressBar.isShown())  progressBar.setVisibility(View.GONE);
+            progressBar.setVisibility(View.GONE);
             Log.w(DataHelper.getTAG(), "JSONException @ cekDataBranchIbankingAsyncTask()\n" + error.getMessage());
         }
         );
@@ -399,8 +399,10 @@ public class PageTransfer extends AppCompatActivity {
                         JSONObject response_json = new JSONObject(response);
                         JSONObject jsonObject = response_json.getJSONObject("data");
 
+
                         if(!jsonObject.getString("norekening").isEmpty()){
 
+                            String nama_tujuan = jsonObject.getString("nama");
                             /**
                              * CEK DATA IBANK
                              */
@@ -410,6 +412,7 @@ public class PageTransfer extends AppCompatActivity {
                             intent.putExtra("link_api_tujuan",branchLink_tujuan);
                             intent.putExtra("branch_tujuan",branch_tujuan);
                             intent.putExtra("norek_tujuan",norek_tujuan);
+                            intent.putExtra("nama_tujuan",nama_tujuan);
                             intent.putExtra("nominal_transfer",nominal_transfer);
                             intent.putExtra("transfer_keterangan",transfer_keterangan);
                             startActivity(intent);

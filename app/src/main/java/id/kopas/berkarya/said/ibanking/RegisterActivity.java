@@ -128,7 +128,6 @@ public class RegisterActivity extends AppCompatActivity {
         editAgree.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.overpass_regular));
         actLanjutkan.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.overpass_bold));
 
-        editTanggalLahir.setText(sdf.format(new Date()));
         editTanggalLahir.setOnClickListener(v->{
 
             DatePickerDialog.OnDateSetListener date = (view, year, monthOfYear, dayOfMonth) -> {

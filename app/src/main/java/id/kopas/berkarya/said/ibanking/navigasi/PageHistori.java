@@ -22,6 +22,7 @@ import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.HttpHeaderParser;
+import com.android.volley.toolbox.StringRequest;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -154,15 +155,14 @@ public class PageHistori extends Fragment {
         progressBar.setVisibility(View.VISIBLE);
         RequestQueue requestQueue = AppController.getInstance().getRequestQueue();
 
-        CacheRequest serverRequest = new CacheRequest(Request.Method.GET,link_api +"banking.php?"+
+        StringRequest serverRequest = new StringRequest(Request.Method.GET,link_api +"banking.php?"+
                 "ib=get_history_transaksi"+
                 "&branch="+branch+
                 "&norek="+norek,
                 req -> {
                     progressBar.setVisibility(View.GONE);
                     try {
-                        final String jsonString = new String(req.data, HttpHeaderParser.parseCharset(req.headers));
-                        JSONArray jsonArray = new JSONArray(jsonString);
+                        JSONArray jsonArray = new JSONArray(req);
 
                         List<HistoryTransaksi> historyTransaksiArrayList = new ArrayList<>();
                         for (int i = 0; i < jsonArray.length(); i++) {
@@ -188,8 +188,6 @@ public class PageHistori extends Fragment {
 
                     } catch (JSONException e2) {
                         e2.printStackTrace();
-                    } catch (UnsupportedEncodingException e) {
-                        e.printStackTrace();
                     }
                 }, error -> {
             progressBar.setVisibility(View.GONE);

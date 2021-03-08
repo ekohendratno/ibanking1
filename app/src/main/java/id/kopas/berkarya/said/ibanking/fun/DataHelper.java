@@ -10,6 +10,7 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -25,6 +26,7 @@ import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import java.io.File;
 import java.io.IOException;
 import java.text.NumberFormat;
 import java.util.Locale;
@@ -213,6 +215,39 @@ public class DataHelper  implements LocationListener {
 
     @Override
     public void onProviderDisabled(String s) {
+
+    }
+
+    public void openFile(Context c, File filepath){
+        //Log.e("a",filepath);
+
+        String str = "com.microsoft.office.excel";
+        //Uri pathe = Uri.fromFile(new File(filepath+".xls"));
+
+
+        //Uri pathe = FileProvider.getUriForFile(c, c.getApplicationContext().getPackageName() + ".provider", new File(filepath));
+        Uri pathe = Uri.fromFile(filepath);
+
+        Intent intent = new Intent();
+        intent.setAction(Intent.ACTION_VIEW);
+        intent.setDataAndType(pathe, "image/*");
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        PackageManager packageManager = c.getPackageManager();
+        if (intent.resolveActivity(packageManager) != null) {
+            c.startActivity(intent.createChooser(intent, "Choose app to open document"));
+        }
+        else
+        {
+            Toast.makeText(c, "Aplikasi Excel belum tersedia harap download dahulu dari Play Store", Toast.LENGTH_SHORT).show();
+            //Launch PlayStore
+            try {
+                c.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id="+str)));
+
+            } catch (android.content.ActivityNotFoundException n) {
+                c.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id="+str)));
+            }
+        }
 
     }
 }

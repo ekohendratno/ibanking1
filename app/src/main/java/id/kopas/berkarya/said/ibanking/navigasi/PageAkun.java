@@ -2,13 +2,18 @@ package id.kopas.berkarya.said.ibanking.navigasi;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -43,7 +48,7 @@ public class PageAkun extends Fragment {
 
     TextView tv1, tv2, tv3, tv4, tv5, tv6;
 
-    private ProgressBar progressBar;
+    private RelativeLayout progressBar;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
@@ -52,7 +57,7 @@ public class PageAkun extends Fragment {
 
         sharedpreferences = getActivity().getSharedPreferences(Splash.MyPREFERENCES, Context.MODE_PRIVATE);
 
-        progressBar = (ProgressBar) rootView.findViewById(R.id.progressBar);
+        progressBar = (RelativeLayout) rootView.findViewById(R.id.progressBar);
 
         link_api = sharedpreferences.getString("link_api", "");
         branch = sharedpreferences.getString("branch", "");
@@ -70,12 +75,45 @@ public class PageAkun extends Fragment {
         tv5 = rootView.findViewById(R.id.tv5);
         tv6 = rootView.findViewById(R.id.tv6);
 
+        rootView.findViewById(R.id.card_share).setOnClickListener(v -> {
+
+            Intent share = new Intent(Intent.ACTION_SEND);
+            share.setType("text/plain");
+            share.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
+
+            // Add data to the intent, the receiving app will decide
+            // what to do with it.
+            share.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.app_name));
+            share.putExtra(Intent.EXTRA_TEXT, getString(R.string.url_apps));
+
+            startActivity(Intent.createChooser(share, "Share link!"));
+        });
+        rootView.findViewById(R.id.btn_send_email).setOnClickListener(v -> sendFeedback(getActivity()));
+        rootView.findViewById(R.id.btn_faq).setOnClickListener(v -> startActivity(new Intent(Intent.ACTION_VIEW).setData(Uri.parse(getString(R.string.url_apps_web_term)))));
+        rootView.findViewById(R.id.btn_kebijakan).setOnClickListener(v -> startActivity(new Intent(Intent.ACTION_VIEW).setData(Uri.parse(getString(R.string.url_terms)))));
+
 
         postSaldosyncTask();
 
         return rootView;
     }
 
+    public static void sendFeedback(Context context) {
+        String body = null;
+        try {
+            body = context.getPackageManager().getPackageInfo(context.getPackageName(), 0).versionName;
+            body = "\n\n-----------------------------\nPlease don't remove this information\n Device OS: Android \n Device OS version: " +
+                    Build.VERSION.RELEASE + "\n App Version: " + body + "\n Device Brand: " + Build.BRAND +
+                    "\n Device Model: " + Build.MODEL + "\n Device Manufacturer: " + Build.MANUFACTURER;
+        } catch (PackageManager.NameNotFoundException e) {
+        }
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setType("message/rfc822");
+        intent.putExtra(Intent.EXTRA_EMAIL, R.string.email_developer);
+        intent.putExtra(Intent.EXTRA_SUBJECT, R.string.app_name);
+        intent.putExtra(Intent.EXTRA_TEXT, body);
+        context.startActivity(Intent.createChooser(intent, context.getString(R.string.choose_email_client)));
+    }
 
     /**
      * UPDATE SALDO

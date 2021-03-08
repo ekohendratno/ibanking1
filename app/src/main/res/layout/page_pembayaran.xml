@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#FFFFFF"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.google.android.material.appbar.AppBarLayout
+        app:elevation="0dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:paddingRight="10dp"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+            app:layout_scrollFlags="scroll|enterAlways"
+            app:layout_collapseMode="pin">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/toolbar_title"
+                    style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
+                    android:fontFamily="@font/overpass_regular"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Pembayaran"/>
+
+            </LinearLayout>
+        </androidx.appcompat.widget.Toolbar>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:scrollbars="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+
+            <androidx.cardview.widget.CardView
+                android:layout_marginBottom="@dimen/list_vertical_margin"
+                android:layout_gravity="center"
+                android:layout_width="300dp"
+                android:orientation="vertical"
+                android:layout_height="wrap_content"
+                app:cardElevation="3dp"
+                app:cardCornerRadius="0dp"
+                android:backgroundTint="#FFFFFF">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minHeight="80dp"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent">
+
+                        <LinearLayout
+                            android:id="@+id/pageTokenSpeedy"
+                            android:background="?selectableItemBackground"
+                            android:orientation="vertical"
+                            android:layout_width="100dp"
+                            android:paddingTop="@dimen/list_vertical_margin"
+                            android:paddingBottom="@dimen/list_vertical_margin"
+                            android:layout_height="match_parent">
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                app:srcCompat="@drawable/ic_wifi"
+                                android:layout_gravity="center"
+                                android:layout_width="32dp"
+                                android:layout_height="32dp"/>
+
+                            <id.kopas.berkarya.said.ibanking.fun.TextViewCustom
+                                app:textViewFont="overpass_regular.ttf"
+                                android:textSize="12dp"
+                                android:layout_marginTop="@dimen/list_vertical_margin"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                                android:layout_gravity="center"
+                                android:gravity="center"
+                                android:textColor="#606060"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Internet\nSpeedy"/>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/pageTokenListrik"
+                            android:background="?selectableItemBackground"
+                            android:orientation="vertical"
+                            android:layout_width="100dp"
+                            android:paddingTop="@dimen/list_vertical_margin"
+                            android:paddingBottom="@dimen/list_vertical_margin"
+                            android:layout_height="match_parent">
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                app:srcCompat="@drawable/ic_flash_sharp"
+                                android:layout_gravity="center"
+                                android:layout_width="32dp"
+                                android:layout_height="32dp"/>
+
+                            <id.kopas.berkarya.said.ibanking.fun.TextViewCustom
+                                app:textViewFont="overpass_regular.ttf"
+                                android:textSize="12dp"
+                                android:layout_marginTop="@dimen/list_vertical_margin"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                                android:layout_gravity="center"
+                                android:gravity="center"
+                                android:textColor="#606060"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Token Listrik\nPrabayar"/>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/pagePulsa"
+                            android:background="?selectableItemBackground"
+                            android:orientation="vertical"
+                            android:layout_width="100dp"
+                            android:paddingTop="@dimen/list_vertical_margin"
+                            android:paddingBottom="@dimen/list_vertical_margin"
+                            android:layout_height="match_parent">
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                app:srcCompat="@drawable/ic_phone_portrait_color"
+                                android:layout_gravity="center"
+                                android:layout_width="32dp"
+                                android:layout_height="32dp"/>
+
+                            <id.kopas.berkarya.said.ibanking.fun.TextViewCustom
+                                app:textViewFont="overpass_regular.ttf"
+                                android:textSize="12dp"
+                                android:layout_marginTop="@dimen/list_vertical_margin"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                                android:layout_gravity="center"
+                                android:gravity="center"
+                                android:textColor="#606060"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Pulsa\nKartu Hallo"/>
+
+                        </LinearLayout>
+                    </LinearLayout>
+
+
+
+                    <View
+                        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                        android:layout_marginRight="@dimen/activity_horizontal_margin"
+                        android:layout_above="@+id/addView"
+                        style="@style/divider" />
+
+
+
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent">
+
+                        <LinearLayout
+                            android:id="@+id/pageKirimUang2"
+                            android:background="?selectableItemBackground"
+                            android:orientation="vertical"
+                            android:layout_width="100dp"
+                            android:paddingTop="@dimen/list_vertical_margin"
+                            android:paddingBottom="@dimen/list_vertical_margin"
+                            android:layout_height="match_parent">
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                app:srcCompat="@drawable/ic_wallet_outline"
+                                android:layout_gravity="center"
+                                android:layout_width="32dp"
+                                android:layout_height="32dp"/>
+
+                            <id.kopas.berkarya.said.ibanking.fun.TextViewCustom
+                                app:textViewFont="overpass_regular.ttf"
+                                android:textSize="12dp"
+                                android:layout_marginTop="@dimen/list_vertical_margin"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                                android:layout_gravity="center"
+                                android:gravity="center"
+                                android:textColor="#606060"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="etc1"/>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/pagePermintaanUang2"
+                            android:background="?selectableItemBackground"
+                            android:orientation="vertical"
+                            android:layout_width="100dp"
+                            android:paddingTop="@dimen/list_vertical_margin"
+                            android:paddingBottom="@dimen/list_vertical_margin"
+                            android:layout_height="match_parent">
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                app:srcCompat="@drawable/ic_wallet_outline"
+                                android:layout_gravity="center"
+                                android:layout_width="32dp"
+                                android:layout_height="32dp"/>
+
+                            <id.kopas.berkarya.said.ibanking.fun.TextViewCustom
+                                app:textViewFont="overpass_regular.ttf"
+                                android:textSize="12dp"
+                                android:layout_marginTop="@dimen/list_vertical_margin"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                                android:layout_gravity="center"
+                                android:gravity="center"
+                                android:textColor="#606060"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="etc2"/>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/pagePembelian2"
+                            android:background="?selectableItemBackground"
+                            android:orientation="vertical"
+                            android:layout_width="100dp"
+                            android:paddingTop="@dimen/list_vertical_margin"
+                            android:paddingBottom="@dimen/list_vertical_margin"
+                            android:layout_height="match_parent">
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                app:srcCompat="@drawable/ic_wallet_outline"
+                                android:layout_gravity="center"
+                                android:layout_width="32dp"
+                                android:layout_height="32dp"/>
+
+                            <id.kopas.berkarya.said.ibanking.fun.TextViewCustom
+                                app:textViewFont="overpass_regular.ttf"
+                                android:textSize="12dp"
+                                android:layout_marginTop="@dimen/list_vertical_margin"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                                android:layout_gravity="center"
+                                android:gravity="center"
+                                android:textColor="#606060"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="etc3"/>
+
+                        </LinearLayout>
+                    </LinearLayout>
+
+
+
+                    <View
+                        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                        android:layout_marginRight="@dimen/activity_horizontal_margin"
+                        android:layout_above="@+id/addView"
+                        style="@style/divider" />
+                </LinearLayout>
+
+
+            </androidx.cardview.widget.CardView>
+
+
+
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+
+    <include layout="@layout/loading"/>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

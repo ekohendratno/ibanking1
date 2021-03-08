@@ -15,7 +15,7 @@ public class Splash extends AppCompatActivity {
     private final Handler waitHandler = new Handler();
     private final Runnable waitCallback = () -> {
 
-        Intent intent = new Intent(Splash.this, LoginActivity.class);
+        Intent intent = new Intent(Splash.this, OptionalActivity.class);
 
         startActivity(intent);
         finish();

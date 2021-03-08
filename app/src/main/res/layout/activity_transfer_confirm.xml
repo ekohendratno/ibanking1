@@ -103,12 +103,11 @@
                                 android:layout_width="fill_parent"
                                 android:layout_height="wrap_content">
                                 <ImageView android:id="@+id/iv0"
-                                    android:visibility="invisible"
                                     android:padding="8.0dip"
                                     android:layout_width="40.0dip"
                                     android:layout_height="40.0dip"
                                     android:layout_marginRight="16dp"
-                                    app:srcCompat="@drawable/ic_card"
+                                    app:srcCompat="@drawable/ic_baseline_short_text_24"
                                     android:layout_alignParentLeft="true"
                                     android:layout_alignParentTop="true" />
                                 <TextView
@@ -385,6 +384,7 @@
 
 
                         <androidx.cardview.widget.CardView
+                            android:visibility="gone"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             app:cardElevation="0dp"
@@ -426,6 +426,7 @@
                         </androidx.cardview.widget.CardView>
 
                         <androidx.cardview.widget.CardView
+                            android:visibility="gone"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             app:cardElevation="0dp"
@@ -490,22 +491,6 @@
     </androidx.core.widget.NestedScrollView>
 
 
-    <RelativeLayout
-        android:visibility="gone"
-        android:id="@+id/progressBar"
-        android:background="#4D000000"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <ProgressBar
-            style="@style/Widget.AppCompat.ProgressBar"
-            android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="-7dp"
-            android:indeterminate="true"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
-    </RelativeLayout>
+    <include layout="@layout/loading"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

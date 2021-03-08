@@ -5,16 +5,25 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.squareup.picasso.NetworkPolicy;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -27,7 +36,7 @@ import id.kopas.berkarya.said.ibanking.navigasi.PageDashboard;
 import id.kopas.berkarya.said.ibanking.navigasi.PageHistori;
 
 public class MainActivity extends AppCompatActivity {
-    String link_api, branch, norek;
+    String link_api, link_api_logo, branch, norek;
     static SharedPreferences sharedpreferences;
     DataHelper dataHelper;
     private static BottomNavigationView navigation;
@@ -53,6 +62,7 @@ public class MainActivity extends AppCompatActivity {
 
                 return false;
             };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,6 +75,14 @@ public class MainActivity extends AppCompatActivity {
 
         dataHelper = new DataHelper(getApplicationContext());
 
+
+        if( TextUtils.isEmpty(link_api) ){
+            Intent intent = new Intent(MainActivity.this, OptionalActivity.class);
+            startActivity(intent);
+            finish();
+        }
+
+
         navigation = findViewById(R.id.navigation);
 
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
@@ -74,6 +92,7 @@ public class MainActivity extends AppCompatActivity {
             getFragment( PageDashboard.newInstance() );
 
         }
+
     }
 
     public void getFragment(Fragment fr){
@@ -178,7 +197,7 @@ public class MainActivity extends AppCompatActivity {
                     editor.remove("no_hp");
                     editor.apply();
 
-                    Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                    Intent intent = new Intent(MainActivity.this, OptionalActivity.class);
                     startActivity(intent);
                     finish();
 
