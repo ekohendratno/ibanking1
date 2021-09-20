@@ -155,7 +155,7 @@
                 android:layout_height="wrap_content"
                 app:cardElevation="3dp"
                 app:cardCornerRadius="5dp"
-                android:backgroundTint="#FFFFFF">
+                android:backgroundTint="#545A5B">
 
                 <LinearLayout
                     android:orientation="vertical"
