@@ -77,9 +77,9 @@ public class MainActivity extends AppCompatActivity {
 
 
         if( TextUtils.isEmpty(link_api) ){
-            Intent intent = new Intent(MainActivity.this, OptionalActivity.class);
-            startActivity(intent);
-            finish();
+            //Intent intent = new Intent(MainActivity.this, OptionalActivity.class);
+            //startActivity(intent);
+            //finish();
         }
 
 

@@ -97,14 +97,16 @@
                             android:paddingRight="16dp"
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content">
-                            <ImageView android:id="@+id/iv1"
-                                android:padding="8.0dip"
+
+                            <ImageView
+                                android:id="@+id/iv1"
                                 android:layout_width="40.0dip"
                                 android:layout_height="40.0dip"
-                                android:layout_marginRight="16dp"
-                                app:srcCompat="@drawable/ic_card"
                                 android:layout_alignParentLeft="true"
-                                android:layout_alignParentTop="true" />
+                                android:layout_alignParentTop="true"
+                                android:layout_marginRight="16dp"
+                                android:padding="8.0dip"
+                                app:srcCompat="@drawable/ic_card" />
                             <TextView
                                 android:fontFamily="sans-serif-light"
                                 android:id="@+id/tv1"

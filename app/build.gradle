@@ -8,7 +8,7 @@ android {
 
     defaultConfig {
         applicationId "id.kopas.berkarya.said.ibanking"
-        minSdkVersion 16
+        minSdkVersion 23
         targetSdkVersion 30
         versionCode 19
         versionName "1.0 Build 19"
